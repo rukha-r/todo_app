@@ -1,0 +1,161 @@
+$dark-desktop-bg: url("./assets/bg-desktop-dark.jpg");
+$light-desktop-bg: url("./assets/bg-desktop-light.jpg");
+$mobile-dark-bg: url("./assets/bg-mobile-dark.jpg");
+$mobile-light-bg: url("./assets/bg-mobile-light.jpg");
+
+$primary-color: #151a3b;
+$dark-mode-bgcolor: #111;
+$primary-text: #41455d;
+$border-color: #80808046;
+$shadow-color: #0000004c;
+$white: #f2f2f2;
+
+@mixin box-size {
+	width: 450px;
+    padding: 15px;
+}
+
+@mixin component-wrapper($color, $bg-color) {
+  @include box-size;
+  color: $color;
+  background-color: $bg-color;
+  padding: 15px 10px 35px 20px;
+  border-bottom: 0.5px solid $border-color;
+}
+@mixin footer($color, $bg-color) {
+	@include box-size;
+	display: flex;
+    color: $color;
+    background-color: $bg-color;
+    button {
+      	border: none;
+        cursor: pointer;
+        background: inherit;
+        color: $primary-text;
+        transform: translate(300px);
+        &:hover {
+          color: $white;       
+        }
+      }
+  }
+
+
+* {
+  padding: 0;
+  margin: 0;
+  font-family: Fantasy;
+  font-size: 15px;
+}
+.body-dark {
+  background-image: $dark-desktop-bg;
+  background-color: $dark-mode-bgcolor;
+  transition: 300ms ease-in-out;
+  height: 100vh;
+  background-repeat: no-repeat;
+  .main-wrapper {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    .component-holder {
+      max-height: 50vh;
+      overflow: scroll;
+      box-shadow: 0.1px 0.1px 200px $shadow-color;
+      &::-webkit-scrollbar {
+        display: none;
+      }
+    }
+    .dark-footer {
+      @include footer($primary-text, $primary-color);      
+  }
+    .light-footer {
+      @include footer($primary-text, $white);
+      p,button {
+      	opacity: .7;
+      }
+      button:hover {
+      	opacity: 1;
+      	color: $primary-color;
+      }
+    }
+    .header {
+      @include box-size;
+      margin: 100px 0 30px 0;
+      h1 {
+        color: $white;
+        font-family: Arial;
+        font-size: 30px;
+        float: left;
+      }
+      .mode-icon {
+        float: right;
+        color: $white;
+        font-size: 20px;
+        cursor: pointer;
+        opacity: 0.6;
+        &:hover {
+          opacity: 1;
+        }
+      }
+    }
+    input {
+      @include box-size;
+      border: none;
+      text-indent: 10px;
+      border-radius: 5px;
+      margin-bottom: 15px;
+      color: $white;
+      background-color: $primary-color;
+    }
+  }
+}
+.component-wrapper-dark {	
+ @include component-wrapper($white, $primary-color);
+  h4 {
+    opacity: 0.5;
+    float: left;
+  }
+  .x {
+  	cursor: pointer;
+    display: none;
+    opacity: 0.3;
+    float: right;
+  }
+  &:hover {
+    .x {
+      display: block;
+      &:hover {
+        opacity: 1;
+      }
+    }
+    h4 {
+      opacity: 0.8;
+    }
+  }
+}
+.component-wrapper-light {
+  @extend .component-wrapper-dark;	
+  @include component-wrapper($primary-color, $white);
+}
+.body-light {
+  @extend .body-dark;
+  background-color: $white;
+  background-image: $light-desktop-bg;
+  .main-wrapper {
+    input {
+      color: $primary-color;
+      background-color: $white;
+    }
+  }
+}
+
+@media screen and (max-width: 600px) {
+.body-dark {
+   background-size: contain;
+   background-image: $mobile-dark-bg;
+}
+.body-light {
+   background-size: contain;
+   background-image: $mobile-light-bg;
+ }
+}
